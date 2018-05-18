@@ -1,6 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
+/*help turning HTMLcollection into array from https://stackoverflow.com/questions/222841 */
+let cardList = [].slice.call(document.getElementsByClassName('card'));
+ console.log(cardList);
 
 
 /*
