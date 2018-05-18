@@ -12,6 +12,13 @@ let cardList = [].slice.call(document.getElementsByClassName('card'));
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+ const resetButton = document.getElementsByClassName('restart');
+ resetButton[0].addEventListener('click', function() {
+   cardList = shuffle(cardList)
+
+
+
+ })
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
