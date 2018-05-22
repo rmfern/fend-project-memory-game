@@ -3,10 +3,13 @@
  */
 /*help turning HTMLcollection into array from https://stackoverflow.com/questions/222841 */
 let cardList = [].slice.call(document.getElementsByClassName('card'));
+let count = 0;
+const deck = document.getElementsByClassName('deck')[0];
+const movesCounter = document.getElementsByClassName('moves')[0];
 
 function loadDeck () {
   for (let i = 0; i < cardList.length - 1; i++){
-    document.getElementsByClassName('deck')[0].appendChild(cardList[i]);
+    deck.appendChild(cardList[i]);
   }
 };
 
@@ -22,9 +25,18 @@ function loadDeck () {
    cardList = shuffle(cardList)
    console.log(cardList);
    loadDeck();
+   movesCounter.textContent = 0;
+
  })
 
  //Create counter for when a card is clicked to delete stars after X clicks
+document.body.addEventListener('click', function(e){
+  if (e.target.className === 'card') {
+    count += 1;
+    movesCounter.textContent = count;
+  }
+  //Delete stars based on count 
+});
 
 //Display the above counter to the user
 
