@@ -4,15 +4,24 @@
 /*help turning HTMLcollection into array from https://stackoverflow.com/questions/222841 */
 let cardList = [].slice.call(document.getElementsByClassName('card'));
 let count = 0;
+let moves = 0;
+let starList = [].slice.call(document.getElementsByClassName('fa-star'));
 const deck = document.getElementsByClassName('deck')[0];
 const movesCounter = document.getElementsByClassName('moves')[0];
+const stars = document.getElementsByClassName('stars')[0];
+console.log(stars)
 
 function loadDeck () {
-  for (let i = 0; i < cardList.length - 1; i++){
+  for (let i = 0; i < cardList.length; i++){
     deck.appendChild(cardList[i]);
   }
 };
 
+function loadStars() {
+  for (let i = 0; i < starList.length; i++){
+    stars.appendChild(starList[i]);
+  }
+}
 
 /*
  * Display the cards on the page
@@ -25,6 +34,7 @@ function loadDeck () {
    cardList = shuffle(cardList)
    console.log(cardList);
    loadDeck();
+   loadStars();
    movesCounter.textContent = 0;
 
  })
@@ -33,9 +43,25 @@ function loadDeck () {
 document.body.addEventListener('click', function(e){
   if (e.target.className === 'card') {
     count += 1;
-    movesCounter.textContent = count;
+    moves = (count/2)
+    if (count % 2 === 0) {
+      movesCounter.textContent = moves;
+      switch(moves) {
+        case 10:
+          stars.removeChild(stars.lastChild);
+          break;
+        case 14:
+          stars.removeChild(stars.lastChild);
+          break;
+        case 14:
+          stars.removeChild(stars.lastChild);
+          break;
+      }
+
+    }
   }
-  //Delete stars based on count 
+  //Delete stars based on count
+
 });
 
 //Display the above counter to the user
