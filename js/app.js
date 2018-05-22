@@ -9,7 +9,6 @@ let starList = [].slice.call(document.getElementsByClassName('fa-star'));
 const deck = document.getElementsByClassName('deck')[0];
 const movesCounter = document.getElementsByClassName('moves')[0];
 const stars = document.getElementsByClassName('stars')[0];
-console.log(stars)
 
 function loadDeck () {
   for (let i = 0; i < cardList.length; i++){
@@ -25,15 +24,11 @@ function loadStars() {
 
 function deleteStars(num) {
   if (stars.hasChildNodes()) {
-    console.log("passed")
     if (num === 20) {
-      console.log("count = 20")
       starList[0].parentNode.removeChild(starList[0]);
     } else if (num === 28) {
-      console.log("count = 28")
       starList[1].parentNode.removeChild(starList[1]);
     } else if (num === 34) {
-      console.log("count = 34")
       starList[2].parentNode.removeChild(starList[2]);
     }
   }
@@ -59,11 +54,22 @@ document.body.addEventListener('click', function(e){
   if (e.target.className === 'card') {
     count += 1;
     deleteStars(count);
-    console.log(count);
     moves = (count/2);
     if (count % 2 === 0) {
       movesCounter.textContent = moves;
     }
+    // console.log(matching.length);
+    //
+    // if matching == e.target.innerHTML {
+    //   console.log("Works")
+    //   }
+    // } else {
+    //   matching += e.target;
+    //   console.log(e.target);
+    //   e.target.classList.add('show');
+    // }
+    // console.log(matching);
+    // console.log(matching.length)
   }
   });
 
