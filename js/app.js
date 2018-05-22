@@ -23,6 +23,22 @@ function loadStars() {
   }
 }
 
+function deleteStars(num) {
+  if (stars.hasChildNodes()) {
+    console.log("passed")
+    if (num === 20) {
+      console.log("count = 20")
+      starList[0].parentNode.removeChild(starList[0]);
+    } else if (num === 28) {
+      console.log("count = 28")
+      starList[1].parentNode.removeChild(starList[1]);
+    } else if (num === 34) {
+      console.log("count = 34")
+      starList[2].parentNode.removeChild(starList[2]);
+    }
+  }
+};
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -32,39 +48,25 @@ function loadStars() {
  const resetButton = document.getElementsByClassName('restart');
  resetButton[0].addEventListener('click', function() {
    cardList = shuffle(cardList)
-   console.log(cardList);
    loadDeck();
    loadStars();
    movesCounter.textContent = 0;
-
+   count = 0;
  })
 
  //Create counter for when a card is clicked to delete stars after X clicks
 document.body.addEventListener('click', function(e){
   if (e.target.className === 'card') {
     count += 1;
-    moves = (count/2)
+    deleteStars(count);
+    console.log(count);
+    moves = (count/2);
     if (count % 2 === 0) {
       movesCounter.textContent = moves;
-      switch(moves) {
-        case 10:
-          stars.removeChild(stars.lastChild);
-          break;
-        case 14:
-          stars.removeChild(stars.lastChild);
-          break;
-        case 14:
-          stars.removeChild(stars.lastChild);
-          break;
-      }
-
     }
   }
-  //Delete stars based on count
+  });
 
-});
-
-//Display the above counter to the user
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -80,7 +82,6 @@ function shuffle(array) {
 
     return array;
 }
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
