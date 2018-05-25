@@ -5,6 +5,8 @@
 let cardList = [].slice.call(document.getElementsByClassName('card'));
 let count = 0;
 let moves = 0;
+let compareCard;
+let currentCard;
 let starList = [].slice.call(document.getElementsByClassName('fa-star'));
 const deck = document.getElementsByClassName('deck')[0];
 const movesCounter = document.getElementsByClassName('moves')[0];
@@ -55,21 +57,25 @@ document.body.addEventListener('click', function(e){
     count += 1;
     deleteStars(count);
     moves = (count/2);
-    if (count % 2 === 0) {
-      movesCounter.textContent = moves;
+    if (count % 2 !== 0) {
+      let compareCard = e.target;
+      console.log('odd click');
+      console.log("compare card:" + compareCard);
     }
-    // console.log(matching.length);
-    //
-    // if matching == e.target.innerHTML {
-    //   console.log("Works")
-    //   }
-    // } else {
-    //   matching += e.target;
-    //   console.log(e.target);
-    //   e.target.classList.add('show');
-    // }
-    // console.log(matching);
-    // console.log(matching.length)
+
+    if (count % 2 == 0) {
+      movesCounter.textContent = moves;
+      let currentCard = e.target
+      console.log("current card:" + currentCard);
+      if (currentCard == compareCard) {
+        console.log("Match");
+      }
+    }
+
+
+
+
+
   }
   });
 
