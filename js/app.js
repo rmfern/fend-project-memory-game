@@ -2,37 +2,45 @@
  * Create a list that holds all of your cards
  */
 /*help turning HTMLcollection into array from https://stackoverflow.com/questions/222841 */
-let cardList = [].slice.call(document.getElementsByClassName('card'));
+let cardList = ['eye', 'fighter-jet', 'fire', 'flag', 'futbol-o', 'glass', 'male', 'female', 'eye', 'fighter-jet', 'fire', 'flag', 'futbol-o', 'glass', 'male', 'female'];
 let count = 0;
 let moves = 0;
-let starList = [].slice.call(document.getElementsByClassName('fa-star'));
-const deck = document.getElementsByClassName('deck')[0];
-const movesCounter = document.getElementsByClassName('moves')[0];
-const stars = document.getElementsByClassName('stars')[0];
+const deck = $(".deck")[0];
+const movesCounter = $(".moves")[0];
+const stars = $(".stars")[0];
+const tempCard = "";
 
 function loadDeck () {
+  shuffle(cardList);
+  $('.deck').empty();
   for (let i = 0; i < cardList.length; i++){
-    deck.appendChild(cardList[i]);
+    $('.deck').append("<li class='card'><i class='fa fa-" + cardList[i] + "'></i></li>");
+    // $('.fa-cardList[i]').click( function() {
+    //   console.log($(this) + " was clicked");
+    // })
   }
 };
 
 function loadStars() {
-  for (let i = 0; i < starList.length; i++){
-    stars.appendChild(starList[i]);
+
+  $('.stars').empty();
+  for (let i = 0; i < 3; i++){
+    $('.stars').append("<li><i class='fa fa-star'></i></li>");
   }
-}
+};
 
 function deleteStars(num) {
   if (stars.hasChildNodes()) {
     if (num === 20) {
-      starList[0].parentNode.removeChild(starList[0]);
+      $('.fa-star').first().remove();
     } else if (num === 28) {
-      starList[1].parentNode.removeChild(starList[1]);
+      $('.fa-star').first().remove();
     } else if (num === 34) {
-      starList[2].parentNode.removeChild(starList[2]);
+      $('.fa-star').first().remove();
     }
   }
 };
+
 
 /*
  * Display the cards on the page
@@ -40,36 +48,34 @@ function deleteStars(num) {
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
- const resetButton = document.getElementsByClassName('restart');
- resetButton[0].addEventListener('click', function() {
-   cardList = shuffle(cardList)
-   loadDeck();
-   loadStars();
-   movesCounter.textContent = 0;
-   count = 0;
- })
+ loadDeck();
+
+$('.restart').click(function(){
+  loadDeck();
+  loadStars();
+  movesCounter.textContent = 0;
+  count = 0;
+});
+
 
  //Create counter for when a card is clicked to delete stars after X clicks
-document.body.addEventListener('click', function(e){
-  if (e.target.className === 'card') {
+$('.deck').click(function(e){
+  if ($(e.target).hasClass('card')) {
     count += 1;
     deleteStars(count);
     moves = (count/2);
+
     if (count % 2 === 0) {
       movesCounter.textContent = moves;
+    } else {
+      tempCard = $(e.target).children().attr('class');
     }
-    // console.log(matching.length);
-    //
-    // if matching == e.target.innerHTML {
-    //   console.log("Works")
-    //   }
-    // } else {
-    //   matching += e.target;
-    //   console.log(e.target);
-    //   e.target.classList.add('show');
-    // }
-    // console.log(matching);
-    // console.log(matching.length)
+
+
+
+
+
+
   }
   });
 
