@@ -8,16 +8,16 @@ let moves = 0;
 const deck = $(".deck")[0];
 const movesCounter = $(".moves")[0];
 const stars = $(".stars")[0];
-const tempCard = "";
+let tempCard = "";
+let tempClass = "";
+let matchCount = 0;
 
 function loadDeck () {
   shuffle(cardList);
   $('.deck').empty();
   for (let i = 0; i < cardList.length; i++){
     $('.deck').append("<li class='card'><i class='fa fa-" + cardList[i] + "'></i></li>");
-    // $('.fa-cardList[i]').click( function() {
-    //   console.log($(this) + " was clicked");
-    // })
+    $('fa fa-'+ cardList[i]).on('click', function(){console.log('this works')});
   }
 };
 
@@ -42,6 +42,7 @@ function deleteStars(num) {
 };
 
 
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -60,22 +61,36 @@ $('.restart').click(function(){
 
  //Create counter for when a card is clicked to delete stars after X clicks
 $('.deck').click(function(e){
-  if ($(e.target).hasClass('card')) {
-    count += 1;
-    deleteStars(count);
-    moves = (count/2);
+  if (!($(e.target).hasClass('open') || $(e.target).hasClass('match')) ) {
 
-    if (count % 2 === 0) {
-      movesCounter.textContent = moves;
-    } else {
-      tempCard = $(e.target).children().attr('class');
+    if ($(e.target).hasClass('card')) {
+      count += 1;
+      deleteStars(count);
+      moves = (count/2);
+
+      if (count % 2 !== 0) {
+        tempClass = $(e.target)
+        tempClass.toggleClass('open show');
+        tempCard = $(e.target).children().attr('class');
+        console.log(tempCard)
+      } else {
+        movesCounter.textContent = moves;
+        $(e.target).toggleClass('open show');
+
+        if ($(e.target).children().hasClass(tempCard)) {
+          tempClass.toggleClass('open show match');
+          $(e.target).toggleClass('open show match');
+          matchCount++;
+        } else {
+          setTimeout(function() {
+            tempClass.toggleClass('open show');
+            $(e.target).toggleClass('open show');
+          }, 600);
+        }
+      }
     }
-
-
-
-
-
-
+  } else {
+    console.log('card is open');
   }
   });
 
