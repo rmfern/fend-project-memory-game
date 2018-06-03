@@ -10,7 +10,7 @@ const movesCounter = $(".moves")[0];
 const stars = $(".stars")[0];
 let tempCard = "";
 let tempClass = "";
-let matchCount = 7;
+let matchCount = 0;
 let sec = 0;
 let starCount = 3;
 
