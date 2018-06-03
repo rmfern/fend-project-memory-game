@@ -1,3 +1,3 @@
 # How to contribute
 
-The files in this repository are used as the starting point for all students. Because we want students to write the majority of the code themselves, pull requests (most likely) will _not_ be merged into the project.
+This project was created as part of a nanodegree from www.udacity.com and as such, pull requests will likely not be accepted for this. For the starter code for this project, please visit - https://github.com/udacity/fend-project-memory-game

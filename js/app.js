@@ -2,7 +2,8 @@
  * Create a list that holds all of your cards
  */
 /*help turning HTMLcollection into array from https://stackoverflow.com/questions/222841 */
-let cardList = ['eye', 'fighter-jet', 'fire', 'flag', 'futbol-o', 'glass', 'male', 'female', 'eye', 'fighter-jet', 'fire', 'flag', 'futbol-o', 'glass', 'male', 'female'];
+let cardList = ['eye', 'fighter-jet', 'fire', 'flag', 'futbol-o', 'glass', 'male', 'female'];
+cardList = cardList.concat(cardList)
 let count = 0;
 let moves = 0;
 const deck = $(".deck")[0];
@@ -13,6 +14,7 @@ let tempClass = "";
 let matchCount = 0;
 let sec = 0;
 let starCount = 3;
+let myInterval;
 
 function loadDeck () {
   shuffle(cardList);
@@ -39,10 +41,11 @@ function deleteStars(num) {
     } else if (num === 28) {
       $('.fa-star').first().remove();
       starCount--
-    } else if (num === 34) {
-      $('.fa-star').first().remove();
-      starCount--
     }
+    // } else if (num === 34) {
+    //   $('.fa-star').first().remove();
+    //   starCount--
+    // }
   }
 };
 
@@ -63,11 +66,43 @@ $('.restart').click(function(){
   loadDeck();
   loadStars();
   movesCounter.textContent = 0;
+  clearInterval(myInterval);
+  $('#minutes').css('display', 'none');
+  $('#seconds').css('display', 'none');
   count = 0;
   sec = 0;
+  $("#seconds").html(pad(++sec%60));
+  $("#minutes").html(pad(parseInt(sec/60,10)) + ':');
 });
 
+
+
 function pad ( val ) { return val > 9 ? val : "0" + val; };
+
+// function clock() {
+//   $("#seconds").html(pad(++sec%60));
+//   $("#minutes").html(pad(parseInt(sec/60,10)) + ':');
+// };
+
+// if (count === 1) {
+// timer function from unknown website - link lost when computer rebooted
+//
+//       myInterval = setInterval(function () {
+//       $("#seconds").html(pad(++sec%60));
+//       $("#minutes").html(pad(parseInt(sec/60,10)) + ':');
+//
+//
+//       }, 1000);
+//     $('#minutes').css('display', 'inline');
+//     $('#seconds').css('display', 'inline');
+// // to stop the counter
+//   // clearInterval(myInterval);
+//   //
+//   // setInterval(clock(), 1000);
+  //
+  //
+   // };
+
 
  //Create counter for when a card is clicked to delete stars after X clicks
 $('.deck').click(function(e){
@@ -80,14 +115,23 @@ $('.deck').click(function(e){
       if (count === 1) {
       // timer function from unknown website - link lost when computer rebooted
 
-      setInterval( function(){
-          $("#seconds").html(pad(++sec%60)).one();
-          $("#minutes").html(pad(parseInt(sec/60,10)) + ':').one();
-      }, 1000);
+            myInterval = setInterval(function () {
+            $("#seconds").html(pad(++sec%60));
+            $("#minutes").html(pad(parseInt(sec/60,10)) + ':');
 
-      $('#minutes').css('display', 'inline');
-      $('#seconds').css('display', 'inline');
-      };
+
+            }, 1000);
+          $('#minutes').css('display', 'inline');
+          $('#seconds').css('display', 'inline');
+      // to stop the counter
+        // clearInterval(myInterval);
+        //
+        // setInterval(clock(), 1000);
+        //
+        //
+         };
+
+
 
       if (count % 2 !== 0) {
         tempClass = $(e.target)
@@ -109,7 +153,7 @@ $('.deck').click(function(e){
             seconds = pad(++time%60);
             starHTML = "<i class='fa fa-star'></i>";
             $('#congrats').append("<p>Your time was " + minutes + " minutes and " + seconds + " seconds!</p>");
-            $('#congrats').append("<p>You earned " + starCount + " stars this round. " + starHTML.repeat(starCount));
+            $('#congrats').append("<p>You earned " + starCount + " " + starHTML.repeat(starCount) + " this round.");
             $('.modal').css('display', 'block');
           }
 
