@@ -10,7 +10,9 @@ const movesCounter = $(".moves")[0];
 const stars = $(".stars")[0];
 let tempCard = "";
 let tempClass = "";
-let matchCount = 0;
+let matchCount = 7;
+let sec = 0;
+let starCount = 3;
 
 function loadDeck () {
   shuffle(cardList);
@@ -33,10 +35,13 @@ function deleteStars(num) {
   if (stars.hasChildNodes()) {
     if (num === 20) {
       $('.fa-star').first().remove();
+      starCount--
     } else if (num === 28) {
       $('.fa-star').first().remove();
+      starCount--
     } else if (num === 34) {
       $('.fa-star').first().remove();
+      starCount--
     }
   }
 };
@@ -51,22 +56,38 @@ function deleteStars(num) {
  */
  loadDeck();
 
+ // Restart at end of game or at user's choice
+
 $('.restart').click(function(){
+  $('.modal').css('display', 'none');
   loadDeck();
   loadStars();
   movesCounter.textContent = 0;
   count = 0;
+  sec = 0;
 });
 
+function pad ( val ) { return val > 9 ? val : "0" + val; };
 
  //Create counter for when a card is clicked to delete stars after X clicks
 $('.deck').click(function(e){
   if (!($(e.target).hasClass('open') || $(e.target).hasClass('match')) ) {
-
     if ($(e.target).hasClass('card')) {
       count += 1;
       deleteStars(count);
       moves = (count/2);
+
+      if (count === 1) {
+      // timer function from unknown website - link lost when computer rebooted
+
+      setInterval( function(){
+          $("#seconds").html(pad(++sec%60)).one();
+          $("#minutes").html(pad(parseInt(sec/60,10)) + ':').one();
+      }, 1000);
+
+      $('#minutes').css('display', 'inline');
+      $('#seconds').css('display', 'inline');
+      };
 
       if (count % 2 !== 0) {
         tempClass = $(e.target)
@@ -81,6 +102,17 @@ $('.deck').click(function(e){
           tempClass.toggleClass('open show match');
           $(e.target).toggleClass('open show match');
           matchCount++;
+
+          if (matchCount === 8) {
+            time = sec;
+            minutes = pad(parseInt(time/60/10));
+            seconds = pad(++time%60);
+            starHTML = "<i class='fa fa-star'></i>";
+            $('#congrats').append("<p>Your time was " + minutes + " minutes and " + seconds + " seconds!</p>");
+            $('#congrats').append("<p>You earned " + starCount + " stars this round. " + starHTML.repeat(starCount));
+            $('.modal').css('display', 'block');
+          }
+
         } else {
           setTimeout(function() {
             tempClass.toggleClass('open show');
@@ -93,6 +125,8 @@ $('.deck').click(function(e){
     console.log('card is open');
   }
   });
+
+
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
